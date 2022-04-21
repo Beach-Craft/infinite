@@ -1,4 +1,4 @@
-import random
+import random as ran
 import string
 
 def id_generator():
@@ -8,15 +8,15 @@ def id_generator():
 
     for i in range(id_length):# using string module to generate the password
 
-        cap = random.choice(string.ascii_uppercase)
+        cap = ran.choice(string.ascii_uppercase)
 
         store += cap
 
-        small = random.choice(string.ascii_lowercase)
+        small = ran.choice(string.ascii_lowercase)
 
         store += small
 
-        digit = random.choice(string.digits)
+        digit = ran.choice(string.digits)
 
         store += digit
 

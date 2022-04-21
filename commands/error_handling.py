@@ -14,6 +14,8 @@ class ErrorHandling(commands.Cog):
             await ctx.reply("You dont have the permissions to do that!", mention_author = False)
         elif isinstance(error, commands.MemberNotFound):
             await ctx.reply("Member was not found")
+        elif isinstance(error, commands.MissingAnyRole):
+            await ctx.reply(f"You dont have the permissions to do that!")
         else:
             raise error
         

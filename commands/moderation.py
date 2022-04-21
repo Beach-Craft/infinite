@@ -1,4 +1,3 @@
-from os import stat
 import discord
 import datetime
 import asyncio
@@ -32,7 +31,7 @@ class Mute(commands.Cog):
             description=f"{channel.mention} has been added!",
             color=discord.Color.green()
             )
-            await moderation.add_channel_data.add_channel_data(channel)
+            await moderation.add_channel_data(channel)
             await ctx.reply(embed = embed, mention_author = False)
 
     #  Command = RemoveChannel
@@ -116,6 +115,7 @@ class Mute(commands.Cog):
         if staff == None:
             staff = ctx.author
 
+        staffs = await moderation.staff_data(staff)
         staffs = await moderation.get_staff_data()
 
         points = staffs[str(staff.id)]["points"]
@@ -261,7 +261,7 @@ class Mute(commands.Cog):
                     warning_channel = self.bot.get_channel(942113618563051560)
 
                     # Notification embed
-                    embed=discord.Embed(title="Advertisement Deleted", description=f"<:discord_mod:956600652082073731> **Moderated By:** {ctx.author.mention}\n<:play:954442477383864320> **Case:** ({warncount})\n <:channel:954442477325140028> **Channel:** {channel_reply.content}\n<:info:954442477434187876> **Reason:**\n```diff\n- {reason_reply.content}\n```")
+                    embed=discord.Embed(title="Advertisement Deleted", description=f"**Moderated By:** {ctx.author.mention}\n**Case:** ({warncount})\n**Channel:** {channel_reply.content}\n**Reason:**\n{reason_reply.content}")
                     embed.set_image(url="https://cdn.discordapp.com/attachments/938886261010206820/957147578040983582/infinite_ads.png")
                     embed.timestamp = datetime.datetime.utcnow()
                     embed.set_footer(text=f"Infinite Moderation Team", icon_url=ctx.guild.icon_url)
@@ -401,7 +401,7 @@ class Mute(commands.Cog):
                 else:
                     index += 1
             
-            await ctx.send(embed = embed)
+        await ctx.send(embed = embed)
         
     @commands.command()
     @commands.guild_only()
@@ -418,12 +418,12 @@ class Mute(commands.Cog):
             em.add_field(name="Usage:", value="-clearnwarns [Member ID/Mention]")
             em.add_field(name="Example:", value=f"-clearnwarns {ctx.author.mention}", inline=False)
         else:
-            with open("./warns.json","r") as file:
+            with open("data/warns.json","r") as file:
                 load_warns = json.load(file)
     
         del load_warns[str(member.id)]
   
-        with open("./warns.json","w") as file:
+        with open("data/warns.json","w") as file:
             json.dump(load_warns,file)
   
         await ctx.reply(f"{member.display_name} warns removed!", mention_author = False)

@@ -57,9 +57,9 @@ for filename in os.listdir('./commands'):
 async def on_ready():
     '''Bot Activity'''
 
-    activity = discord.Game(name="spreading love", type=2)
+    activity = discord.Game(name="Infnite", type=2)
     await bot.change_presence(status=discord.Status.online, activity=activity)
     print(f"Logged in as {bot.user} ID: {bot.user.id}")
-  
 
-bot.run("OTU5NzkyMjkwNTIyNjExNzQz.YkhCOg.BJmd7vYfyW5hj293hQr11MSdJ2c")
+token = os.environ.get("TOKEN")
+bot.run(token)

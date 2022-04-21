@@ -61,5 +61,20 @@ class Information(commands.Cog):
 
         await ctx.reply(embed = em, mention_author = False)
 
+    @commands.command()
+    @commands.guild_only()
+    @commands.has_any_role("Founder", "Admins", "Partnership Team")
+    async def partner(self, ctx, user : discord.Member):
+
+      role = ctx.guild.get_role(887208103316168734)
+    
+      if role.position > ctx.author.top_role.position: #if the role is above users top role it sends error
+        return await ctx.send('**:x: | That role is above your top role!**') 
+      if role in user.roles:
+          await user.remove_roles(role) #removes the role if user already has
+          await ctx.reply(f"Removed Partner from {user.mention}")
+      else:
+          await user.add_roles(role) #adds role if not already has it
+          await ctx.reply(f"Added Partner to {user.mention}") 
 def setup(bot):
     bot.add_cog(Information(bot))

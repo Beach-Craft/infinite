@@ -29,7 +29,7 @@ class Events(commands.Cog):
     @commands.Cog.listener()
     async def on_message(self, message):
 
-        notification_channel = self.bot.get_channel(942377593510961192)
+        notification_channel = self.bot.get_channel(935101741274378250)
 
         with open("data/channels.json", "r") as file:
             load_channels = json.load(file)
@@ -44,14 +44,16 @@ class Events(commands.Cog):
                 note =0
             else:
 
-                if len(message.content) <= 45:
+                if len(message.content) <= 50:
                     await message.delete()
 
                     embed = discord.Embed(
+                        title="Advertisement Deleted",
                         description=f"Message deleted in {message.channel.mention}"
                     )
-                    embed.add_field(name="Reason", value="Your ad didn't include 5+ words in your ad describing your server")
                     embed.add_field(name="Rules", value="Make sure to read advertising rules from <#887208116767297546>")
+                    embed.add_field(name="Reason", value="Your ad didn't include 5+ words in your ad describing your server")
+                    embed.set_image(url="https://cdn.discordapp.com/attachments/938886261010206820/957147578040983582/infinite_ads.png")
                     await notification_channel.send(message.author.mention, embed = embed)
 
 def setup(bot):
