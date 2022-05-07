@@ -7,6 +7,14 @@ intents.members = True
 bot = commands.Bot(command_prefix="$", intents=intents)
 bot.remove_command('help')
 
+from flask import Flask
+app = Flask('app')
+
+@app.route('/')
+def hello_world():
+  return '<h1>Hello, World!</h1>'
+
+app.run(host='0.0.0.0', port=8080)
 
 @bot.command()
 @commands.is_owner()
@@ -57,7 +65,7 @@ for filename in os.listdir('./commands'):
 async def on_ready():
     '''Bot Activity'''
 
-    activity = discord.Game(name="Infnite", type=2)
+    activity = discord.Game(name="Grow Your Server!", type=2)
     await bot.change_presence(status=discord.Status.online, activity=activity)
     print(f"Logged in as {bot.user} ID: {bot.user.id}")
 

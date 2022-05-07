@@ -59,34 +59,6 @@ class Mute(commands.Cog):
             json.dump(load, file)
         await ctx.reply(f"Channel removed {channel.mention}!", mention_author = False)
 
-    #  Commands = Mute
-    @commands.command()
-    @commands.guild_only()
-    @commands.has_any_role("Founder", "Admins", "Moderation Team")
-    async def mute(self, ctx, user : discord.Member, duration = 0,*, unit = None):
-        if user == None:
-
-            em = discord.Embed(
-                title="Mute Command",
-                descrition="Mutes a member"
-                )
-            em.add_field(name="Usage:", value="-mute [Member ID/Mention]")
-            em.add_field(name="Example:", value=f"-warn {ctx.author.mention}", inline=False)
-
-            await ctx.reply(embed = em, mention_author = False)
-        else:
-          roleobject = discord.utils.get(ctx.message.guild.roles, id=891991637184630794)
-          await ctx.send(f"<:check:954442477362872370> Muted {user} for {duration}{unit}")
-          await user.add_roles(roleobject)
-          if unit == "s":
-            wait = 1 * duration
-            await asyncio.sleep(wait)
-          elif unit == "m":
-            wait = 60 * duration
-            await asyncio.sleep(wait)
-            await user.remove_roles(roleobject)
-            await ctx.send(f":white_check_mark: {user} was unmuted")
-
     #  Command = Clear
     @commands.command()
     @commands.guild_only()
